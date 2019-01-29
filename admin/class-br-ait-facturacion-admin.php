@@ -265,7 +265,8 @@ class BR_AIT_Facturacion_Admin {
 				'message' =>'PHP: Registrar Pago - Factura-Fin',
 				'data' => $data,
 			 	'user' => $user,
-			 	'user_id' => $user->ID
+			 	'user_id' => $user->ID,
+			 	'historial_pagos' => get_usermeta( $user->ID, 'historial_pagos' )
 			 ), 'TRACERT');
 	}
 
