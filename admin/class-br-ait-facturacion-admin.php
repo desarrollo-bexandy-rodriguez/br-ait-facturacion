@@ -208,6 +208,7 @@ class BR_AIT_Facturacion_Admin {
 	}
 
 	public function registrarPago($payment) {
+		AitPaypalSubscriptions::log('PHP: Registrar Pago - Factura-Inicio', 'TRACERT');
 		$data = $payment->data;
 		$user = new Wp_User($data['user']);
 		$themeOptions = aitOptions()->getOptionsByType('theme');
@@ -216,7 +217,7 @@ class BR_AIT_Facturacion_Admin {
 		$start = $facturaOptions['inicioFacturacion'] ? $facturaOptions['inicioFacturacion'] :'00000';
 		$sufijo = date('Y');
 		$codigo = get_option( 'nextFactura', 'XXXX-00000-XXXX'  );
-		$codigo = substr($codigo, 5, 5);
+		$codigo = substr($codigo, strlen($prefijo)+1, 5);
 		$nextFactura = get_option( 'nextFactura', $prefijo.'-'.$codigo.'-'.$sufijo  );
 		$packages = new ThemePackages();
 		$package = $packages->getPackageBySlug($data['package']);
@@ -259,6 +260,7 @@ class BR_AIT_Facturacion_Admin {
 		$codigo++;
 		$codigo = str_pad($codigo, 5, '0',STR_PAD_LEFT );
 		update_option( 'nextFactura', $prefijo.'-'.$codigo.'-'.$sufijo  );
+		AitPaypalSubscriptions::log('PHP: Registrar Pago - Factura-Fin', 'TRACERT');
 	}
 
 	public function extra_user_profile_fields( $user ) { 
