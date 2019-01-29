@@ -260,7 +260,13 @@ class BR_AIT_Facturacion_Admin {
 		$codigo++;
 		$codigo = str_pad($codigo, 5, '0',STR_PAD_LEFT );
 		update_option( 'nextFactura', $prefijo.'-'.$codigo.'-'.$sufijo  );
-		AitPaypalSubscriptions::log('PHP: Registrar Pago - Factura-Fin', 'TRACERT');
+		AitPaypalSubscriptions::log(
+			array(
+				'message' =>'PHP: Registrar Pago - Factura-Fin',
+				'data' => $data,
+			 	'user' => $user,
+			 	'user_id' => $user->ID
+			 ), 'TRACERT');
 	}
 
 	public function extra_user_profile_fields( $user ) { 
